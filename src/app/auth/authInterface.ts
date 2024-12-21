@@ -1,15 +1,15 @@
 export interface IRegisterUser {
-  name: string;
-  email: string;
-  password: string;
-  role?: string;
+  name: string
+  email: string
+  password: string
+  role?: string
 }
 
 export interface ILoginUser {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export interface IAuthResponse {
-  token: string;
+  token: string
 }

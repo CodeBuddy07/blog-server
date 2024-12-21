@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express'
 import { AnyZodObject, ZodError } from 'zod'
 
@@ -9,8 +8,8 @@ const validateRequest = (schema: AnyZodObject) => {
         body: req.body,
         query: req.query,
         params: req.params,
-      });
-      next() 
+      })
+      next()
     } catch (error) {
       if (error instanceof ZodError) {
         res.status(400).json({
@@ -18,12 +17,12 @@ const validateRequest = (schema: AnyZodObject) => {
           message: 'Validation error',
           statusCode: 400,
           errors: error.errors.map(err => ({
-            path: err.path[err.path.length-1],
+            path: err.path[err.path.length - 1],
             message: err.message,
           })),
         })
       } else {
-        next(error) 
+        next(error)
       }
     }
   }

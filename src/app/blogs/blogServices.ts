@@ -8,7 +8,7 @@ export const createBlog = async (blogData: IBlog) => {
   return await blog.save()
 }
 
-export const getAllBlogs = async (a:any) => {
+export const getAllBlogs = async (a: any) => {
   const { search, sortBy = 'createdAt', sortOrder = 'desc', filter } = a
 
   const query: any = {}
@@ -38,14 +38,17 @@ export const getAllBlogs = async (a:any) => {
 }
 
 export const getBlogById = async (id: string, userID: string) => {
-
-  const blog = await BlogModel.findById(id).populate('author', ' name email');
+  const blog = await BlogModel.findById(id).populate('author', ' name email')
 
   if (blog) {
-    if(( new mongoose.Types.ObjectId(blog.author as any)).equals(new mongoose.Types.ObjectId(userID))){
-        return blog
+    if (
+      new mongoose.Types.ObjectId(blog.author as any).equals(
+        new mongoose.Types.ObjectId(userID),
+      )
+    ) {
+      return blog
     }
-    throw new Error('Unauthorized!');
+    throw new Error('Unauthorized!')
   }
   throw new Error('Blog Not Found!')
 }
