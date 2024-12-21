@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IBlog } from './blogInterface'
 import BlogModel from '.././models/blogModel'
+import mongoose from 'mongoose'
 
 export const createBlog = async (blogData: IBlog) => {
   const blog = new BlogModel(blogData)
@@ -36,10 +37,15 @@ export const getAllBlogs = async (a:any) => {
   throw new Error('Blog Not Found!')
 }
 
-export const getBlogById = async (id: string) => {
-  const blog = await BlogModel.findById(id)
+export const getBlogById = async (id: string, userID: string) => {
+
+  const blog = await BlogModel.findById(id).populate('author', ' name email');
+
   if (blog) {
-    return blog
+    if(( new mongoose.Types.ObjectId(blog.author as any)).equals(new mongoose.Types.ObjectId(userID))){
+        return blog
+    }
+    throw new Error('Unauthorized!');
   }
   throw new Error('Blog Not Found!')
 }

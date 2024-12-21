@@ -4,7 +4,7 @@ import { IRegisterUser, ILoginUser } from './authInterface';
 import User from '../models/userModel';
 
 export const registerUser = async (userData: IRegisterUser) => {
-  const { name, email, password } = userData;
+  const { name, email, password, role } = userData;
 
 
   const existingUser = await User.findOne({ email });
@@ -19,7 +19,8 @@ export const registerUser = async (userData: IRegisterUser) => {
   const newUser = await User.create({
     name,
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    role
   });
 
   return {

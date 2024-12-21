@@ -37,7 +37,7 @@ const errorMiddleware = (err: any, req: Request, res: Response, next: NextFuncti
     });
   }
  
-  const x = message === "Invalid credentials"? 401 :message === "Blog Not Found!"? 404: message ==='invalid token'? 498 : statusCode
+  const x = message === 'User not found'? 404: message === "Unauthorized!"? 401 :message === "Invalid credentials"? 401 :message === "Invalid credentials"? 401 :message === "Blog Not Found!"? 404: message ==='invalid token'? 498 : statusCode
 
   res.status(x).json({
     success: false,

@@ -35,7 +35,7 @@ export const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const getBlogById = catchAsync(async (req: Request, res: Response) => {
-  const blog = await BlogService.getBlogById(req.params.id);
+  const blog = await BlogService.getBlogById(req.params.id, req.user.id);
   res.status(200).json({
     success: true,
     message: 'Blog retrieved successfully',
