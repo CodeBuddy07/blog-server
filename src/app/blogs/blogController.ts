@@ -46,7 +46,7 @@ export const getBlogById = catchAsync(async (req: Request, res: Response) => {
 export const updateBlog = catchAsync(
   async (req: Request, res: Response): Promise<any> => {
     const validatedData = updateBlogSchema.parse(req.body)
-    const blog = await BlogService.updateBlog(req.params.id, validatedData)
+    const blog = await BlogService.updateBlog(req.params.id, validatedData, req.user.id)
     res.status(200).json({
       success: true,
       message: 'Blog updated successfully',
@@ -63,7 +63,7 @@ export const updateBlog = catchAsync(
 
 export const deleteBlog = catchAsync(
   async (req: Request, res: Response): Promise<any> => {
-    await BlogService.deleteBlog(req.params.id)
+    await BlogService.deleteBlog(req.params.id, req.user.id)
     res.status(200).json({
       success: true,
       message: 'Blog deleted successfully',

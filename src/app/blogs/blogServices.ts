@@ -53,18 +53,32 @@ export const getBlogById = async (id: string, userID: string) => {
   throw new Error('Blog Not Found!')
 }
 
-export const updateBlog = async (id: string, updateData: Partial<IBlog>) => {
+export const updateBlog = async (id: string, updateData: Partial<IBlog> , userID: string) => {
   const blog = await BlogModel.findByIdAndUpdate(id, updateData, { new: true })
   if (blog) {
-    return blog
+    if (
+        new mongoose.Types.ObjectId(blog.author as any).equals(
+          new mongoose.Types.ObjectId(userID),
+        )
+      ) {
+        return blog
+      }
+      throw new Error('Unauthorized!');
   }
   throw new Error('Blog Not Found!')
 }
 
-export const deleteBlog = async (id: string) => {
+export const deleteBlog = async (id: string , userID: string) => {
   const blog = await BlogModel.findByIdAndDelete(id)
   if (blog) {
-    return blog
+    if (
+        new mongoose.Types.ObjectId(blog.author as any).equals(
+          new mongoose.Types.ObjectId(userID),
+        )
+      ) {
+        return blog
+      }
+      throw new Error('Unauthorized!');
   }
   throw new Error('Blog Not Found!')
 }
