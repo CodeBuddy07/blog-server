@@ -29,7 +29,7 @@ export const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
   const blogs = await BlogService.getAllBlogs(req.query)
   res.status(200).json({
     success: true,
-    message: 'Blogs retrieved successfully',
+    message: 'Blogs fetched successfully',
     data: blogs,
   })
 })
@@ -38,7 +38,7 @@ export const getBlogById = catchAsync(async (req: Request, res: Response) => {
   const blog = await BlogService.getBlogById(req.params.id, req.user.id)
   res.status(200).json({
     success: true,
-    message: 'Blog retrieved successfully',
+    message: 'Blog fetched successfully',
     data: blog,
   })
 })
