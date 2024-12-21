@@ -1,27 +1,25 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import config from '../config';
+import catchAsync from '../utils/catchAsync';
 
+const authMiddleware = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  
+  const token = req.headers.authorization?.split(' ')[1];
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
-    return res.status(401).json({ success: false, message: 'No token, authorization denied' });
+    throw {
+      statusCode: 401,
+      message: 'Unauthorized',
+      details: 'Token is missing',
+    };
   }
 
-  try {
-    const decoded = jwt.verify(token, config.jwt_secret!) as JwtPayload;
-    req.user = decoded; 
-    next();
-  } catch (error) {
-    console.error(error);
-    return res.status(401).json({ success: false, message: 'Token is not valid' });
-  }
-};
+  // Verify token
+  const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
 
-export const adminMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  if (req.user?.role !== 'admin') {
-    return res.status(403).json({ success: false, message: 'Not authorized as an admin' });
-  }
+  req.user = decoded;
   next();
-};
+});
+
+export default authMiddleware;
+

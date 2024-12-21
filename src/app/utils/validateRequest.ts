@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express'
 import { AnyZodObject, ZodError } from 'zod'
 
@@ -8,7 +9,7 @@ const validateRequest = (schema: AnyZodObject) => {
         body: req.body,
         query: req.query,
         params: req.params,
-      })
+      });
       next() 
     } catch (error) {
       if (error instanceof ZodError) {

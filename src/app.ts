@@ -1,13 +1,17 @@
 import express, { Request, Response } from 'express';
 import authRoutes from './app/auth/authRoutes';
 import errorMiddleware from './app/utils/customError';
+import blogRouter from './app/blogs/blogRoutes';
 
 const app = express();
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/blogs', blogRouter);
 
-app.get('/', (req: Request, res: Response) => {
+
+
+app.get('/', (req: Request, res: Response, ) => {
   res.send('Blog server is running...');
 });
 
