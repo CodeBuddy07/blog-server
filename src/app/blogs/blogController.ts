@@ -24,8 +24,9 @@ export const createBlog = catchAsync(async (req: Request, res: Response): Promis
   });
 });
 
-export const getAllBlogs = catchAsync(async (_req: Request, res: Response) => {
-  const blogs = await BlogService.getAllBlogs();
+export const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
+  
+  const blogs = await BlogService.getAllBlogs(req.query);
   res.status(200).json({
     success: true,
     message: 'Blogs retrieved successfully',
