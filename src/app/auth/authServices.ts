@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { IRegisterUser, ILoginUser } from './authInterface'
 import User from '../models/userModel'
+import config from '../config'
 
 export const registerUser = async (userData: IRegisterUser) => {
   const { name, email, password, role } = userData
@@ -42,7 +43,7 @@ export const loginUser = async (userData: ILoginUser) => {
 
   const token = jwt.sign(
     { id: user._id, role: user.role },
-    process.env.JWT_SECRET as string,
+    config.jwt_secret as string,
     {
       expiresIn: '1d',
     },
