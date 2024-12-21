@@ -6,7 +6,7 @@ Welcome to the Blog Server project! This README will guide you through the setup
 **Blog Server**
 
 ## Live URL
-[Live Demo](http://example.com)
+[Live Demo](https://blog-server-assignment03.vercel.app/)
 
 ## Features
 - User authentication and authorization
